@@ -2,12 +2,19 @@ import Configuration from "./configuration";
 
 class User extends Configuration {
  signUp = async data => {
-  const result = await this.fetch("sign-up", {
-   method: "POST",
-   body: JSON.stringify(data)
-  });
-
-  console.log(result);
+  try {
+   const result = await this.axios("sign-up", {
+    method: "POST",
+    body: JSON.stringify(data)
+   });
+   if (result.user) {
+    return { ok: true };
+   } else {
+    return { ok: false, message: result.message };
+   }
+  } catch (error) {
+   return { ok: false, message: error.message };
+  }
  };
 }
 

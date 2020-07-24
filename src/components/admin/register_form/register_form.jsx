@@ -10,7 +10,7 @@ export default function RegisterForm() {
  const { Item } = Form;
 
  const [inputs, setInputs] = useState({
-  email: false,
+  email: "",
   password: "",
   repeatPassword: "",
   privacyPolicy: false
@@ -72,9 +72,41 @@ export default function RegisterForm() {
      message: "Las contraseñas tiene que ser iguales"
     });
    } else {
-    userApi.signUp(inputs);
+    const result = await userApi.signUp(inputs);
+    if (result.ok) {
+     notification["success"]({
+      message: "El usuario fue creado con exito"
+     });
+     resetForm();
+    } else {
+     notification["error"]({
+      message: result.message
+     });
+    }
    }
   }
+ };
+
+ const resetForm = () => {
+  const inputs = document.getElementsByTagName("input");
+  for (let index = 0; index < inputs.length; index++) {
+   inputs[index].classList.remove("success");
+   inputs[index].classList.remove("error");
+  }
+
+  setFormValid({
+   email: false,
+   password: false,
+   repeatPassword: false,
+   privacyPolicy: false
+  });
+
+  setInputs({
+   email: "",
+   password: "",
+   repeatPassword: "",
+   privacyPolicy: false
+  });
  };
 
  return (
@@ -85,6 +117,7 @@ export default function RegisterForm() {
      autoComplete="off"
      type="email"
      name="email"
+     value={inputs.email}
      onChange={inputValid}
      placeholder="Correo electronico"
      className="register-form__input"
@@ -97,6 +130,7 @@ export default function RegisterForm() {
      type="password"
      name="password"
      onChange={inputValid}
+     value={inputs.password}
      placeholder="Contraseña"
      className="register-form__input"
     />
@@ -107,6 +141,7 @@ export default function RegisterForm() {
      prefix={<LockOutlined style={{ color: "rgba(0,0,0,0.25)" }} />}
      type="password"
      name="repeatPassword"
+     value={inputs.repeatPassword}
      onChange={inputValid}
      placeholder="Repetir Contraseña"
      className="register-form__input"
@@ -114,7 +149,11 @@ export default function RegisterForm() {
    </Item>
 
    <Item>
-    <Checkbox name="privacyPolicy" onChange={inputValid}>
+    <Checkbox
+     name="privacyPolicy"
+     onChange={inputValid}
+     checked={inputs.privacyPolicy}
+    >
      He leido y acepto la politica de privacidad
     </Checkbox>
    </Item>
