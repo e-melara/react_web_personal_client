@@ -3,14 +3,17 @@ import { Switch, BrowserRouter as Router } from "react-router-dom";
 
 import "./scss/app.scss";
 import ApplicationRoutes from "./config/routes";
+import AuthProvider from "./providers/AuthProvider";
 
 function App() {
  return (
-  <Router>
-   <Switch>
-    <ApplicationRoutes />
-   </Switch>
-  </Router>
+  <AuthProvider>
+   <Router>
+    <Switch>
+     <ApplicationRoutes />
+    </Switch>
+   </Router>
+  </AuthProvider>
  );
 }
 

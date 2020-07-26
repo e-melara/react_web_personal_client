@@ -13,16 +13,16 @@ export default function RegisterForm() {
   email: "",
   password: "",
   repeatPassword: "",
-  privacyPolicy: false
+  privacyPolicy: false,
  });
 
- const onChange = e => {
+ const onChange = (e) => {
   const value =
    e.target.name === "privacyPolicy" ? e.target.checked : e.target.value;
 
   setInputs({
    ...inputs,
-   [e.target.name]: value
+   [e.target.name]: value,
   });
  };
 
@@ -30,57 +30,57 @@ export default function RegisterForm() {
   email: false,
   password: false,
   repeatPassword: false,
-  privacyPolicy: false
+  privacyPolicy: false,
  });
 
- const inputValid = e => {
+ const inputValid = (e) => {
   const { type, name } = e.target;
 
   if (type === "password") {
    setFormValid({
     ...formValid,
-    [name]: minLength(e.target, 6)
+    [name]: minLength(e.target, 6),
    });
   }
 
   if (type === "email") {
    setFormValid({
     ...formValid,
-    [name]: emailValidation(e.target)
+    [name]: emailValidation(e.target),
    });
   }
 
   if (name === "privacyPolicy") {
    setFormValid({
     ...formValid,
-    [name]: e.target.checked
+    [name]: e.target.checked,
    });
   }
  };
 
- const submit = async e => {
+ const submit = async (e) => {
   e.preventDefault();
   const { email, password, repeatPassword, privacyPolicy } = formValid;
 
   if (!email || !password || !repeatPassword || !privacyPolicy) {
    notification["error"]({
-    message: "Todos los campos son obligatorios"
+    message: "Todos los campos son obligatorios",
    });
   } else {
-   if (password != repeatPassword) {
+   if (password !== repeatPassword) {
     notification["error"]({
-     message: "Las contraseñas tiene que ser iguales"
+     message: "Las contraseñas tiene que ser iguales",
     });
    } else {
     const result = await userApi.signUp(inputs);
     if (result.ok) {
      notification["success"]({
-      message: "El usuario fue creado con exito"
+      message: "El usuario fue creado con exito",
      });
      resetForm();
     } else {
      notification["error"]({
-      message: result.message
+      message: result.message,
      });
     }
    }
@@ -98,14 +98,14 @@ export default function RegisterForm() {
    email: false,
    password: false,
    repeatPassword: false,
-   privacyPolicy: false
+   privacyPolicy: false,
   });
 
   setInputs({
    email: "",
    password: "",
    repeatPassword: "",
-   privacyPolicy: false
+   privacyPolicy: false,
   });
  };
 
