@@ -1,30 +1,32 @@
 import React from "react";
 import { Layout, Menu } from "antd";
-import { HomeOutlined, MenuOutlined } from "@ant-design/icons";
-import { Link } from "react-router-dom";
+import { HomeOutlined, UserOutlined } from "@ant-design/icons";
+import { Link, withRouter } from "react-router-dom";
 
 import "./sidebar.scss";
 
-export default function Sidebar(props) {
- const { menuCollapsed } = props;
+function Sidebar(props) {
+ const { menuCollapsed, location } = props;
 
  const { Sider } = Layout;
  return (
   <Sider className="admin-sider" collapsed={menuCollapsed}>
-   <Menu theme="dark" mode="inline" defaultSelectedKeys={["1"]}>
-    <Menu.Item key="1">
+   <Menu theme="dark" mode="inline" defaultSelectedKeys={[location.pathname]}>
+    <Menu.Item key="/admin">
      <Link to={"/admin"}>
       <HomeOutlined />
       <span className="nav-text">Home</span>
      </Link>
     </Menu.Item>
-    <Menu.Item key="2">
-     <Link to={"/admin/welcome-admin"}>
-      <MenuOutlined />
-      <span className="nav-text">Menu Web</span>
+    <Menu.Item key="/admin/users">
+     <Link to={"/admin/users"}>
+      <UserOutlined />
+      <span className="users">Users</span>
      </Link>
     </Menu.Item>
    </Menu>
   </Sider>
  );
 }
+
+export default withRouter(Sidebar);

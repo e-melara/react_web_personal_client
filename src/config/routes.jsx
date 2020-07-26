@@ -3,7 +3,7 @@ import { Route, Switch } from "react-router-dom";
 
 import Home from "../pages/home";
 import Contact from "../pages/contact";
-import { Admin, SignIn } from "../admin";
+import { Admin, SignIn, Users } from "../admin";
 
 import LayoutAdmin from "../layouts/layout_admin";
 import LayoutBasic from "../layouts/layout_basic";
@@ -15,14 +15,19 @@ const routes = [
    {
     path: "/admin",
     component: Admin,
-    exact: true
+    exact: true,
    },
    {
     path: "/admin/login",
     component: SignIn,
-    exact: true
-   }
-  ]
+    exact: true,
+   },
+   {
+    path: "/admin/users",
+    component: Users,
+    exact: true,
+   },
+  ],
  },
  {
   Component: LayoutBasic,
@@ -30,15 +35,15 @@ const routes = [
    {
     path: "/",
     component: Home,
-    exact: true
+    exact: true,
    },
    {
     path: "/contact",
     component: Contact,
-    exact: true
-   }
-  ]
- }
+    exact: true,
+   },
+  ],
+ },
 ];
 
 export default function ApplicationRoutes() {
@@ -52,7 +57,7 @@ export default function ApplicationRoutes() {
        key={index}
        path={item.path}
        exact={item.exact}
-       render={props => (
+       render={(props) => (
         <Component {...props}>
          <item.component />
         </Component>
